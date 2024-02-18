@@ -17,7 +17,7 @@ class TransactionTest {
 
     @BeforeEach
     void setUp() {
-        product = new Product("Test Product", "Description", BigDecimal.valueOf(99.99), 10, 20, "Category", "Supplier");
+        product = new Product(null, "Test Product", "Description", BigDecimal.valueOf(99.99), 10, 20, "Category", "Supplier", null);
         productQuantity = new Transaction.ProductQuantity(product, 5);
         List<Transaction.ProductQuantity> productQuantities = new ArrayList<>();
         productQuantities.add(productQuantity);

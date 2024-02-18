@@ -36,7 +36,7 @@ public class ProductControllerTest {
 
     @BeforeEach
     void setUp() {
-        product = new Product("Test Product", "Description", BigDecimal.valueOf(10.5), 10, 20, "Category", "Supplier");
+        product = new Product(null, "Test Product", "Description", BigDecimal.valueOf(10.5), 10, 20, "Category", "Supplier", null);
     }
 
     @Test
