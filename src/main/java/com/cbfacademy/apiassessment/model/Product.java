@@ -2,8 +2,10 @@ package com.cbfacademy.apiassessment.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Product {
     private final UUID id;
@@ -16,7 +18,17 @@ public class Product {
     private String category;
     private String supplier;
 
-    public Product(String name, String description, BigDecimal price, int minimumQuantity, int maximumQuantity, String category, String supplier) {
+    @JsonCreator
+    public Product(
+            @JsonProperty("id") UUID id,
+            @JsonProperty("name") String name,
+            @JsonProperty("description") String description,
+            @JsonProperty("price") BigDecimal price,
+            @JsonProperty("minimumQuantity") int minimumQuantity,
+            @JsonProperty("maximumQuantity") int maximumQuantity,
+            @JsonProperty("category") String category,
+            @JsonProperty("supplier") String supplier,
+            @JsonProperty("createdOn") LocalDateTime createdOn) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.description = description;
@@ -97,15 +109,12 @@ public class Product {
     // Override Object methods
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Product))
+            return false;
         Product product = (Product) o;
         return id.equals(product.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     @Override
@@ -124,7 +133,6 @@ public class Product {
     }
 
     public Product orElseThrow(Object object) {
-        
         throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
     }
 }

@@ -13,7 +13,7 @@ class ProductTest {
     @Test
     void productConstructorAndGetterTest() {
         LocalDateTime now = LocalDateTime.now();
-        Product product = new Product("Test Product", "A test product", BigDecimal.valueOf(99.99), 10, 20, "Electronics", "Test Supplier");
+        Product product = new Product(null, "Test Product", "A test product", BigDecimal.valueOf(99.99), 10, 20, "Electronics", "Test Supplier", now);
 
         assertNotNull(product.getId());
         assertEquals("Test Product", product.getName());
@@ -28,7 +28,7 @@ class ProductTest {
 
     @Test
     void productEquals() {
-        Product product1 = new Product("Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier");
+        Product product1 = new Product(null, "Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier", null);
         Product product2 = product1;
 
         assertEquals(product1, product2);
@@ -36,8 +36,8 @@ class ProductTest {
 
     @Test
     void productHashCode() {
-        Product product1 = new Product("Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier");
-        Product product2 = new Product("Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier");
+        Product product1 = new Product(null, "Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier", null);
+        Product product2 = new Product(null, "Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier", null);
 
         // Note: This test might be controversial because two distinct product instances are not necessarily equal unless their ID matches.
         assertNotEquals(product1.hashCode(), product2.hashCode(), "Expected different hashCodes for different product instances.");
@@ -45,7 +45,7 @@ class ProductTest {
 
     @Test
     void productToString() {
-        Product product = new Product("Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier");
+        Product product = new Product(null, "Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier", null);
         String expected = "Product{id=" + product.getId() +
                 ", name='Product'" +
                 ", description='Description'" +
