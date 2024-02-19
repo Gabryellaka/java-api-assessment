@@ -15,7 +15,7 @@ public enum TransactionType {
         return description;
     }
 
-    // Example utility method to parse string values into TransactionType
+    
     public static TransactionType fromString(String text) {
         for (TransactionType b : TransactionType.values()) {
             if (b.description.equalsIgnoreCase(text)) {
