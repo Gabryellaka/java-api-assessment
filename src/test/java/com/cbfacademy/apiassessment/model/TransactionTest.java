@@ -34,7 +34,7 @@ class TransactionTest {
         assertEquals(1, transaction.getProductQuantities().size());
         assertEquals("Details about the transaction", transaction.getDetails());
 
-        // Test immutability of productQuantities list
+        
         assertThrows(UnsupportedOperationException.class, () -> 
             transaction.getProductQuantities().add(new Transaction.ProductQuantity(product, 10))
         );

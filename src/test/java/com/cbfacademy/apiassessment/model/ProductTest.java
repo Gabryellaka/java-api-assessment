@@ -39,7 +39,7 @@ class ProductTest {
         Product product1 = new Product(null, "Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier", null);
         Product product2 = new Product(null, "Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier", null);
 
-        // Note: This test might be controversial because two distinct product instances are not necessarily equal unless their ID matches.
+        
         assertNotEquals(product1.hashCode(), product2.hashCode(), "Expected different hashCodes for different product instances.");
     }
 

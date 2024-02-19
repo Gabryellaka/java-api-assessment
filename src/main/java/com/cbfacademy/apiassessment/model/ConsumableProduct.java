@@ -30,7 +30,7 @@ public class ConsumableProduct extends Product {
         this.consumptionInstructions = consumptionInstructions;
     }
 
-    // Getters and Setters for the new fields
+    
     public LocalDate getExpirationDate() {
         return expirationDate;
     }
@@ -47,7 +47,7 @@ public class ConsumableProduct extends Product {
         this.consumptionInstructions = consumptionInstructions;
     }
 
-    // Override toString method to include new fields
+    
     @Override
     public String toString() {
         return "ConsumableProduct{" +
