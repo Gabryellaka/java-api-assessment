@@ -48,6 +48,7 @@ public class StockKeepingSystemService {
         saveProductsToFile();
         return product;
     }
+    
 
     // Method to update an existing product
     public Optional<Product> updateProduct(UUID productId, Product updatedProduct) {
