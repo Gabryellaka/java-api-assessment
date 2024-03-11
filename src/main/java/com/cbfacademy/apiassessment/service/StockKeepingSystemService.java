@@ -1,6 +1,7 @@
 package com.cbfacademy.apiassessment.service;
 
 import com.cbfacademy.apiassessment.model.Product;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -38,6 +39,9 @@ public class StockKeepingSystemService {
 
     // Method to add a new product
     public Product addProduct(Product product) {
+        if (product.getId() == null) {
+            product.setId(UUID.randomUUID()); // Atribuir novo UUID se não tiver ID.
+        }
         if (productMap.containsKey(product.getId())) {
             throw new IllegalArgumentException("Product with ID " + product.getId() + " already exists.");
         }
@@ -48,8 +52,9 @@ public class StockKeepingSystemService {
 
     // Method to update an existing product
     public Optional<Product> updateProduct(UUID productId, Product updatedProduct) {
+        updatedProduct.setId(productId); // Override the product's ID with the path variable
         if (productMap.containsKey(productId)) {
-            productMap.put(productId, updatedProduct);
+            productMap.put(productId, updatedProduct); // Use the path variable ID as the key
             saveProductsToFile();
             return Optional.of(updatedProduct);
         }
@@ -85,16 +90,25 @@ public class StockKeepingSystemService {
     public void loadProductsFromFile() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-
         System.out.println("Loading products from file: " + new File(fileName).getAbsolutePath());
+    
         try {
             File file = new File(fileName);
             if (file.exists()) {
-                productMap = mapper.readValue(file, new com.fasterxml.jackson.core.type.TypeReference<Map<UUID, Product>>(){});
+                TypeReference<HashMap<UUID, Product>> typeRef = new TypeReference<>() {};
+                HashMap<UUID, Product> loadedMap = mapper.readValue(file, typeRef);
+                productMap.clear(); // Clear existing data to avoid duplicates
+    
+                // Iterate through the loaded map and set each product's ID to match its key
+                loadedMap.forEach((id, product) -> {
+                    product.setId(id); // Ensure each product's ID matches its map key
+                    productMap.put(id, product); // Put the product back into the map
+                });
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    
 }
 

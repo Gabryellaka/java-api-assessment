@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Product {
-    private final UUID id;
+    private UUID id;
     private String name;
     private String description;
     private BigDecimal price;
@@ -135,4 +135,8 @@ public class Product {
     public Product orElseThrow(Object object) {
         throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
     }
+
+    public void setId(UUID id) {
+        this.id = id;
+    } 
 }
