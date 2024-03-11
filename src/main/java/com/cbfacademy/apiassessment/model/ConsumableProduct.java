@@ -51,7 +51,6 @@ public class ConsumableProduct extends Product {
     @Override
     public String toString() {
         return "ConsumableProduct{" +
-                "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", price=" + getPrice() +
