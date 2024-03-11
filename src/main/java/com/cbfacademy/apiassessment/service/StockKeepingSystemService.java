@@ -38,6 +38,9 @@ public class StockKeepingSystemService {
 
     // Method to add a new product
     public Product addProduct(Product product) {
+        if (product.getId() == null) {
+            product.setId(UUID.randomUUID()); // Atribuir novo UUID se não tiver ID.
+        }
         if (productMap.containsKey(product.getId())) {
             throw new IllegalArgumentException("Product with ID " + product.getId() + " already exists.");
         }
@@ -48,8 +51,11 @@ public class StockKeepingSystemService {
 
     // Method to update an existing product
     public Optional<Product> updateProduct(UUID productId, Product updatedProduct) {
+        if (!productId.equals(updatedProduct.getId())) {
+            throw new IllegalArgumentException("Mismatch between path variable ID and product's ID.");
+        }
         if (productMap.containsKey(productId)) {
-            productMap.put(productId, updatedProduct);
+            productMap.put(productId, updatedProduct); // Assume que updatedProduct tem o mesmo ID
             saveProductsToFile();
             return Optional.of(updatedProduct);
         }

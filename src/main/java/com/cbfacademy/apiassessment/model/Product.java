@@ -135,4 +135,9 @@ public class Product {
     public Product orElseThrow(Object object) {
         throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
     }
+
+    public void setId(UUID randomUUID) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
 }
