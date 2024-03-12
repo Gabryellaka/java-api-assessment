@@ -9,6 +9,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,16 +33,62 @@ public class StockKeepingSystemService {
     public List<Product> getAllProducts() {
         return new ArrayList<>(productMap.values());
     }
+    //MinandMax
+    public List<Product> getProductsSortedByPriceBubbleSort() {
+        List<Product> products = new ArrayList<>(productMap.values());
+        boolean swapped;
+        do {
+            swapped = false;
+            for (int i = 0; i < products.size() - 1; i++) {
+                if (products.get(i).getPrice().compareTo(products.get(i + 1).getPrice()) > 0) {
+                    // Troca os produtos
+                    Product temp = products.get(i);
+                    products.set(i, products.get(i + 1));
+                    products.set(i + 1, temp);
+                    swapped = true;
+                }
+            }
+        } while (swapped);
+        return products;
+    }
 
     // Method to retrieve a product by ID
     public Optional<Product> getProductById(UUID productId) {
         return Optional.ofNullable(productMap.get(productId));
     }
 
+    public List<Product> filterProducts(String field, String value) {
+        String lowerCaseValue = value.toLowerCase();
+        return productMap.values().stream()
+            .filter(p -> {
+                String fieldValue;
+                switch (field.toLowerCase()) {
+                    case "description":
+                        fieldValue = p.getDescription().toLowerCase();
+                        break;
+                    case "name":
+                        fieldValue = p.getName().toLowerCase();
+                        break;
+                    case "category":
+                        fieldValue = p.getCategory().toLowerCase();
+                        break;
+                    case "supplier":
+                        fieldValue = p.getSupplier().toLowerCase();
+                        break;
+                    // Adicione mais campos conforme necessário
+                    default:
+                        fieldValue = ""; // Retorne vazio para qualquer campo não reconhecido
+                }
+                return fieldValue.contains(lowerCaseValue);
+            }).collect(Collectors.toList());
+    }
+    
+    
+
     // Method to add a new product
     public Product addProduct(Product product) {
         if (product.getId() == null) {
-            product.setId(UUID.randomUUID()); // Atribuir novo UUID se não tiver ID.
+            product.setId(UUID.randomUUID()); 
         }
         if (productMap.containsKey(product.getId())) {
             throw new IllegalArgumentException("Product with ID " + product.getId() + " already exists.");
