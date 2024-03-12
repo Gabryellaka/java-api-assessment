@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,16 +45,6 @@ class ProductTest {
     @Test
     void productToString() {
         Product product = new Product(null, "Product", "Description", BigDecimal.ONE, 1, 100, "Category", "Supplier", null);
-        String expected = "Product{id=" + product.getId() +
-                ", name='Product'" +
-                ", description='Description'" +
-                ", price=1" +
-                ", minimumQuantity=1" +
-                ", maximumQuantity=100" +
-                ", createdOn=" + product.getCreatedOn() +
-                ", category='Category'" +
-                ", supplier='Supplier'}";
-
         assertTrue(product.toString().startsWith("Product{id="));
     }
 }
